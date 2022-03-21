@@ -17,6 +17,7 @@ fn main() -> () {
 fn run(config: Config) -> Result<(), Box<dyn Error>> {
     let contents = fs::read_to_string(config.filename)
         .expect("Unable to read file");
+    Ok(())
 }
 
 
