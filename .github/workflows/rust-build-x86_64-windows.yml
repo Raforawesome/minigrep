@@ -18,3 +18,7 @@ jobs:
           use-cross: true
           command: build
           args: --target x86_64-pc-windows-gnu --release
+      - uses: actions/upload-artifact@v3
+        with:
+          name: x86_64-pc-windows-gnu
+          path: ./target/x86_64-pc-windows-gnu/release/minigrep
