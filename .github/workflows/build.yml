@@ -61,3 +61,10 @@
           rustup show
       - name: Build
         run: cargo build --release --target ${{ matrix.target }}
+      - name: Release
+        run: |
+          mv target/${{ matrix.target }}/release/${{ github.event.repository.name }} target/${{ matrix.target }}/release/${{ github.event.repository.name }}_${{ matrix.target }}
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            target/${{ matrix.target }}/release/${{ github.event.repository.name }}_${{ matrix.target }}
