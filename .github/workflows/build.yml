@@ -49,6 +49,8 @@
           sudo apt install ${{ matrix.linker }}
       - name: Install Rust
         run: |
+          ls
+          pwd
           rustup install ${{ matrix.rust }}
           rustup target add ${{ matrix.target }}
           rustup show
