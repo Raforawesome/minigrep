@@ -56,4 +56,9 @@
           rustup show
           ls -a
       - name: Build
-        run: cargo build --release --target ${{ matrix.target }}
+        run: |
+          echo "Directory ./:"
+          ls -a
+          echo "Directory ../:"
+          ls -a ../
+          cargo build --release --target ${{ matrix.target }}
