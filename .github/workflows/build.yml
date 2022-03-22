@@ -74,9 +74,14 @@
           rustup show
       - name: Build
         run: cargo build --release --target ${{ matrix.target }}
-      - name: Rename
+      - name: Rename  # On non-Windows platforms
+        if: matrix.os != "windows"
         run: |
           mv target/${{ matrix.target }}/release/${{ github.event.repository.name }} target/${{ matrix.target }}/release/${{ github.event.repository.name }}_${{ matrix.target }}
+      - name: Rename  # On Windows platforms
+        if: matrix.os == "windows"
+        run: |
+          mv target/${{ matrix.target }}/release/${{ github.event.repository.name }}.exe target/${{ matrix.target }}/release/${{ github.event.repository.name }}_${{ matrix.target }}.exe
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
