@@ -1,0 +1,54 @@
+  name: build
+
+  on: push
+
+  jobs:
+    build:
+      name: rust-build
+      runs-on: ${{matrix.os}}
+      strategy:
+        matrix:
+          include:
+            - build: linux  # build job for x86_64 Linux
+              os: ubuntu-latest
+              rust: stable
+              target: x86_64-unknown-linux-gnu
+              cross: false
+            - build: macos
+              os: macos-latest  # build job for x86_64 macOS
+              rust: stable
+              target: x86_64-apple-darwin
+              cross: false
+            - build: windows
+              os: windows-latest  # build job for x86_64 macOS
+              rust: stable
+              target: x86_64-pc-windows-gnu
+              cross: false
+            - build: arm-v7  # build job for arm Linux
+              os: ubuntu-latest
+              rust: stable
+              target: armv7-unknown-linux-gnueabihf
+              cross: true
+            - build: aarch64  # build job for arm64 Linux
+              os: ubuntu-latest
+              rust: stable
+              target: aarch64-unknown-linux-gnu
+              cross: true
+            - build: aarch64  # build job for arm64 Linux
+              os: macos-latest
+              rust: stable
+              target: aarch64-apple-darwin
+              cross: true
+            - build: aarch64  # build job for arm64 Windows
+              os: windows-latest
+              rust: stable
+              target: aarch64-pc-windows-msvc
+              cross: true
+      steps:
+      - name: Install Rust
+        run: |
+        rustup install ${{ matrix.rust }}
+        rustup target add ${{ matrix.target }}
+        rustup show
+      - name: Build
+        run: cargo build --release --target ${{ matrix.target }}
