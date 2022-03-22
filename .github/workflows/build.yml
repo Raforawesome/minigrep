@@ -51,16 +51,8 @@
           sudo apt install ${{ matrix.linker }}
       - name: Install Rust
         run: |
-          ls -a
-          pwd
           rustup install ${{ matrix.rust }}
           rustup target add ${{ matrix.target }}
           rustup show
-          ls -a
       - name: Build
-        run: |
-          echo "Directory ./:"
-          ls -a
-          echo "Directory ../:"
-          ls -a ../
-          cargo build --release --target ${{ matrix.target }}
+        run: cargo build --release --target ${{ matrix.target }}
