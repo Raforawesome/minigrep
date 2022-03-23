@@ -1,20 +1,20 @@
   name: build
 
-  on: push
-#    push:
-#      tags:
-#        - "v*.*.*"
-#        - "v*.*.*-*"
-#        - "v*.*.*-*-*"
-#        - "pre-release"
-#        - "beta"
-#        - "a*.*.*"
-#        - "latest"
-#        - "testing"
-#        - "rc*"
-#        - "pre-*.*.*"
-#        - "b*.*.*"
-#        - "incomplete-*.*.*"
+  on:
+    push:
+      tags:
+        - "v*.*.*"
+        - "v*.*.*-*"
+        - "v*.*.*-*-*"
+        - "pre-release"
+        - "beta"
+        - "a*.*.*"
+        - "latest"
+        - "testing"
+        - "rc*"
+        - "pre-*.*.*"
+        - "b*.*.*"
+        - "incomplete-*.*.*"
 
   jobs:
     build:
@@ -89,15 +89,15 @@
         if: matrix.os == 'windows-latest'
         run: |
           mv target/${{ matrix.target }}/release/${{ github.event.repository.name }}.exe target/${{ matrix.target }}/release/${{ github.event.repository.name }}_${{ matrix.target }}.exe
-#      - name: Release  # On non-Windows platforms
-#        if: matrix.os != 'windows-latest'
-#        uses: softprops/action-gh-release@v1
-#        with:
-#          files: |
-#            target/${{ matrix.target }}/release/${{ github.event.repository.name }}_${{ matrix.target }}
-#      - name: Release  # On Windows platforms
-#        if: matrix.os == 'windows-latest'
-#        uses: softprops/action-gh-release@v1
-#        with:
-#          files: |
-#            target/${{ matrix.target }}/release/${{ github.event.repository.name }}_${{ matrix.target }}.exe
+      - name: Release  # On non-Windows platforms
+        if: matrix.os != 'windows-latest'
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            target/${{ matrix.target }}/release/${{ github.event.repository.name }}_${{ matrix.target }}
+      - name: Release  # On Windows platforms
+        if: matrix.os == 'windows-latest'
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            target/${{ matrix.target }}/release/${{ github.event.repository.name }}_${{ matrix.target }}.exe
