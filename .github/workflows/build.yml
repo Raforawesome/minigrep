@@ -73,8 +73,14 @@
           rustup install ${{ matrix.rust }}
           rustup target add ${{ matrix.target }}
           rustup show
-      - name: Build
+      - name: Build  # On non-Windows platforms
+        if: matrix.os != 'windows-latest
         run: RUSTFLAGS='-C link-arg=-s' cargo build --release --target ${{ matrix.target }}
+      - name: Build  # On Windows platforms
+        if: matrix.os == 'windows-latest
+        run: |
+          setx RUSTFLAGS '-C link-arg=-s'
+          cargo build --release --target ${{ matrix.target }}
       - name: Rename  # On non-Windows platforms
         if: matrix.os != 'windows-latest'
         run: |
