@@ -1,19 +1,19 @@
   name: build
 
-  on:
-    push:
-      tags:
-        - "v*.*.*"
-        - "v*.*.*-*"
-        - "v*.*.*-*-*"
-        - "pre-release"
-        - "beta"
-        - "a*.*.*"
-        - "latest"
-        - "testing"
-        - "rc*"
-        - "pre-*.*.*"
-        - "b*.*.*"
+  on: push
+#    push:
+#      tags:
+#        - "v*.*.*"
+#        - "v*.*.*-*"
+#        - "v*.*.*-*-*"
+#        - "pre-release"
+#        - "beta"
+#        - "a*.*.*"
+#        - "latest"
+#        - "testing"
+#        - "rc*"
+#        - "pre-*.*.*"
+#        - "b*.*.*"
 
   jobs:
     build:
@@ -54,11 +54,11 @@
               rust: stable
               target: aarch64-apple-darwin
               cross: false
-#            - build: aarch64  # build job for arm64 Windows
-#              os: windows-latest
-#              rust: stable
-#              target: aarch64-pc-windows-msvc
-#              cross: false
+            - build: aarch64  # build job for arm64 Windows
+              os: windows-latest
+              rust: stable
+              target: aarch64-pc-windows-msvc
+              cross: false
       steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -88,9 +88,9 @@
         with:
           files: |
             target/${{ matrix.target }}/release/${{ github.event.repository.name }}_${{ matrix.target }}
-      - name: Release  # On Windows platforms
-        if: matrix.os == 'windows-latest'
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            target/${{ matrix.target }}/release/${{ github.event.repository.name }}_${{ matrix.target }}.exe
+#      - name: Release  # On Windows platforms
+#        if: matrix.os == 'windows-latest'
+#        uses: softprops/action-gh-release@v1
+#        with:
+#          files: |
+#            target/${{ matrix.target }}/release/${{ github.event.repository.name }}_${{ matrix.target }}.exe
